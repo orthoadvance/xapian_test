@@ -1,0 +1,19 @@
+The script allow to reproduce a traceback on xapian 1.4.5
+To run the test just do:
+
+   $ python test.py
+
+The test run some xapian operations N times on Chert/Glass backends.
+There's only problem with Glass backend.
+The error is:
+
+    > document.get_value(0)
+    > xapian.DatabaseCorruptError: Db block overwritten - are there multiple writers?
+
+The final error is:
+
+    > catalog.replace_document(term, xdoc)
+    DatabaseCorruptError: Expected block 200713 to be level 2, not 1
+
+
+And the database is corrupt.
