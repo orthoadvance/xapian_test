@@ -1,19 +1,78 @@
-The script allow to reproduce a traceback on xapian 1.4.5
+The script allow to reproduce a traceback on xapian 1.4.5 (with python2)
 To run the test just do:
 
-   $ python test.py
+   $ python2 test.py
 
 The test run some xapian operations N times on Chert/Glass backends.
-There's only problem with Glass backend.
+(we run it N times because the error don't occur every time?)
+The script create many documents with many stored values and try to display this stored values.
+There's only problem with Glass backend when trying to display the stored values:
 The error is:
 
     > document.get_value(0)
     > xapian.DatabaseCorruptError: Db block overwritten - are there multiple writers?
 
-The final error is:
+Sometimes, the database is corrupted after this error:
 
     > catalog.replace_document(term, xdoc)
     DatabaseCorruptError: Expected block 200713 to be level 2, not 1
 
+Example of result:
 
-And the database is corrupt.
+	Test 1/5 glass
+	Traceback (most recent call last):
+	  File "./test_xapian.py", line 71, in <module>
+		t.test(backend)
+	  File "./test_xapian.py", line 46, in test
+		value1 = document.get_value(0)
+	xapian.DatabaseCorruptError: Db block overwritten - are there multiple writers?
+	> Error
+	Test 1/5 chert
+	> Success
+	Test 2/5 glass
+	Traceback (most recent call last):
+	  File "./test_xapian.py", line 71, in <module>
+		t.test(backend)
+	  File "./test_xapian.py", line 46, in test
+		value1 = document.get_value(0)
+	xapian.DatabaseCorruptError: Db block overwritten - are there multiple writers?
+	> Error
+	Test 2/5 chert
+
+	> Success
+	Test 3/5 glass
+	Traceback (most recent call last):
+	  File "./test_xapian.py", line 71, in <module>
+		t.test(backend)
+	  File "./test_xapian.py", line 46, in test
+		value1 = document.get_value(0)
+	xapian.DatabaseCorruptError: Db block overwritten - are there multiple writers?
+	> Error
+	Test 3/5 chert
+	> Success
+	Test 4/5 glass
+	Traceback (most recent call last):
+	  File "./test_xapian.py", line 71, in <module>
+		t.test(backend)
+	  File "./test_xapian.py", line 46, in test
+		value1 = document.get_value(0)
+	xapian.DatabaseCorruptError: Db block overwritten - are there multiple writers?
+	> Error
+	Test 4/5 chert
+	> Success
+	Test 5/5 glass
+	Traceback (most recent call last):
+	  File "./test_xapian.py", line 71, in <module>
+		t.test(backend)
+	  File "./test_xapian.py", line 46, in test
+		value1 = document.get_value(0)
+	xapian.DatabaseCorruptError: Db block overwritten - are there multiple writers?
+	> Error
+	Test 5/5 chert
+	> Success
+	========================================
+	========================================
+	{'chert': {'errors': 0, 'success': 5}, 'glass': {'errors': 5, 'success': 0}}
+	========================================
+	========================================
+
