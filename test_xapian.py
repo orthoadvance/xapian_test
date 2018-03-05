@@ -18,6 +18,7 @@ from optparse import OptionParser
 from sys import exit
 
 # Import xapian
+import traceback
 import xapian
 
 
@@ -41,7 +42,7 @@ class XapianTest(object):
             catalog.add_document(doc)
             catalog.commit_transaction()
             if i%50==0:
-                for documentID in xrange(1, catalog.get_doccount() + 1):
+                for documentID in range(1, catalog.get_doccount() + 1):
                     document = catalog.get_document(documentID)
                     value1 = document.get_value(0)
                     value2 = document.get_value(1)
@@ -70,5 +71,6 @@ if __name__ == '__main__':
         try:
             t.test(backend)
         except:
+            print traceback.format_exc()
             exit(1)
     exit(0)
