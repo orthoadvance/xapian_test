@@ -37,8 +37,10 @@ for i in range(0, NB_TESTS):
         stdoutdata, stderrdata = popen.communicate()
         if popen.returncode == 1:
             tests[backend]['errors'] += 1
+            print '> Error'
         else:
             tests[backend]['success'] += 1
+            print '> Success'
 # Print tests resuls
 print '===='*10
 print '===='*10
