@@ -37,7 +37,7 @@ class XapianTest(object):
         for i in range(0, 5000):
             #print('Doc {0}'.format(i))
             doc = xapian.Document()
-            for j in range(0, 50):
+            for j in range(0, 5000):
                 doc.add_value(j, 'Value {0}'.format(j))
             catalog.add_document(doc)
             catalog.commit_transaction()
