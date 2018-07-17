@@ -1,0 +1,24 @@
+diff --git a/xapian-core/backends/glass/glass_cursor.cc b/xapian-core/backends/glass/glass_cursor.cc
+index 34add1a013ca..935a6ee98359 100644
+--- a/xapian-core/backends/glass/glass_cursor.cc
++++ b/xapian-core/backends/glass/glass_cursor.cc
+@@ -71,8 +74,11 @@ GlassCursor::GlassCursor(const GlassTable *B_, const Glass::Cursor * C_)
+ void
+ GlassCursor::rebuild()
+ {
+     int new_level = B->level;
+     if (new_level <= level) {
++	for (int j = 0; j < new_level; ++j) {
++	    C[j].clone(B->C[j]);
++	}
+ 	for (int j = new_level; j <= level; ++j) {
+ 	    C[j].destroy();
+ 	}
+@@ -81,6 +89,7 @@ GlassCursor::rebuild()
+ 	C = new Cursor[new_level + 1];
+ 	for (int i = 0; i < level; ++i) {
+ 	    C[i].swap(old_C[i]);
++	    C[i].clone(B->C[i]);
+ 	}
+ 	delete [] old_C;
+ 	for (int j = level; j < new_level; ++j) {
