@@ -35,7 +35,7 @@ class XapianTest(object):
         catalog = xapian.WritableDatabase('catalog', backend)
         catalog.begin_transaction(True)
         for i in range(0, 5000):
-            #print('Doc {0}'.format(i))
+            print('Doc {0}'.format(i))
             doc = xapian.Document()
             for j in range(0, 5000):
                 doc.add_value(j, 'Value {0}'.format(j))
